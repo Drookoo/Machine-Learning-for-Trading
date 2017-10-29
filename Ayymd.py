@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
+"""Bollinger Bands for stock ticker symbol."""
+
 
 def symbol_to_path(symbol, base_dir="data"):
     """Return CSV file path given ticker symbol."""
@@ -53,7 +55,7 @@ def get_bollinger_bands(rm, rstd):
 
 def test_run():
     # Read data
-    dates = pd.date_range('2012-01-01', '2012-12-31')
+    dates = pd.date_range('2015-10-27', '2017-10-27')
     symbols = ['AMD']
     df = get_data(symbols, dates)
 
