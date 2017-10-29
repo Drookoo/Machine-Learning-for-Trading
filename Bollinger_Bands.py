@@ -9,20 +9,24 @@ def symbol_to_path(symbol, base_dir="data"):
     """Return CSV file path given ticker symbol."""
     return os.path.join(base_dir, "{}.csv".format(str(symbol)))
 
+def get_ticker():
+    """Place Stock Ticker Symbol Here"""
+    ticker = 'AMD'
+    return ticker
 
 def get_data(symbols, dates):
     """Read stock data (adjusted close) for given symbols from CSV files."""
     df = pd.DataFrame(index=dates)
-    if 'AMD' not in symbols:  # add AMD for reference, if absent
-        symbols.insert(0, 'AMD')
+    if get_ticker() not in symbols:  # add AMD for reference, if absent
+        symbols.insert(0, get_ticker())
 
     for symbol in symbols:
         df_temp = pd.read_csv(symbol_to_path(symbol), index_col='Date',
                               parse_dates=True, usecols=['Date', 'Adj Close'], na_values=['nan'])
         df_temp = df_temp.rename(columns={'Adj Close': symbol})
         df = df.join(df_temp)
-        if symbol == 'AMD':  # drop dates AMD did not trade
-            df = df.dropna(subset=["AMD"])
+        if symbol == get_ticker():  # drop dates AMD did not trade
+            df = df.dropna(subset=[get_ticker()])
 
     return df
 
@@ -56,21 +60,21 @@ def get_bollinger_bands(rm, rstd):
 def test_run():
     # Read data
     dates = pd.date_range('2015-10-27', '2017-10-27')
-    symbols = ['AMD']
+    symbols = [get_ticker()]
     df = get_data(symbols, dates)
 
     # Compute Bollinger Bands
     # 1. Compute rolling mean
-    rm_AMD = get_rolling_mean(df['AMD'], window=20)
+    rm_AMD = get_rolling_mean(df[get_ticker()], window=20)
 
     # 2. Compute rolling standard deviation
-    rstd_AMD = get_rolling_std(df['AMD'], window=20)
+    rstd_AMD = get_rolling_std(df[get_ticker()], window=20)
 
     # 3. Compute upper and lower bands
     upper_band, lower_band = get_bollinger_bands(rm_AMD, rstd_AMD)
 
     # Plot raw AMD values, rolling mean and Bollinger Bands
-    ax = df['AMD'].plot(title="Bollinger Bands", label='AMD')
+    ax = df['AMD'].plot(title="Bollinger Bands", label=get_ticker())
     rm_AMD.plot(label='Rolling mean', ax=ax)
     upper_band.plot(label='upper band', ax=ax)
     lower_band.plot(label='lower band', ax=ax)
