@@ -1,9 +1,8 @@
+"""Bollinger Bands for stock ticker symbol."""
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-
-"""Bollinger Bands for stock ticker symbol."""
-
 
 def symbol_to_path(symbol, base_dir="data"):
     """Return CSV file path given ticker symbol."""
