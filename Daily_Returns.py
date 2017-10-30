@@ -50,7 +50,7 @@ def compute_daily_returns(df):
 def test_run():
     # Read data
     dates = pd.date_range('2015-10-27', '2017-10-27')  # one month only
-    symbols = [get_ticker()]
+    symbols = [get_ticker(), 'SQ']
     df = get_data(symbols, dates)
     plot_data(df)
 

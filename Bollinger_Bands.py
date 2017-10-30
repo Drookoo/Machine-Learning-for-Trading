@@ -10,7 +10,7 @@ def symbol_to_path(symbol, base_dir="data"):
 
 def get_ticker():
     """Place Stock Ticker Symbol Here"""
-    ticker = 'AMD'
+    ticker = 'SQ'
     return ticker
 
 def get_data(symbols, dates):
@@ -73,7 +73,7 @@ def test_run():
     upper_band, lower_band = get_bollinger_bands(rm_AMD, rstd_AMD)
 
     # Plot raw AMD values, rolling mean and Bollinger Bands
-    ax = df['AMD'].plot(title="Bollinger Bands", label=get_ticker())
+    ax = df[get_ticker()].plot(title="Bollinger Bands", label=get_ticker())
     rm_AMD.plot(label='Rolling mean', ax=ax)
     upper_band.plot(label='upper band', ax=ax)
     lower_band.plot(label='lower band', ax=ax)
